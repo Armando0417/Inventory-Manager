@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Transaction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/process_transaction.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/restructured/typography.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/restructured/buttons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Process Transaction</h1>
+        <div class="d-flex justify-content-between mb-4">
+            <button class="btn btn-primary" onclick="window.location.href='/products'">Back to Inventory Viewer</button>
+        </div>
+            <form id="search-form" onsubmit="return false;">
+                <input type="text" id="search-box" class="form-control me-2" placeholder="Search products...">
+            </form>
+        <div class="d-flex">
+            <div id="inventory-list" class="flex-grow-1 me-3">
+                <h2>Inventory List</h2>
+                {% for item in items %}
+                <div class="item">
+                    <div class="item-details">
+                        <span>{{ item.name }} (Category: {{ item.category }}, Price: {{ item.price }})</span>
+                        {% if item.size %}
+                        <span class="item-variation">[ {{ item.size }} ]</span>
+                        {% endif %}
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-primary btn-sm" onclick="addToCart('{{ item.id }}', '{{ item.name }}', '{{ item.size }}', '{{ true if item.size else false }}')">Add to Cart</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div id="cart" class="border p-3" style="width: 300px;">
+                <h2>Cart 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+                    class="bi bi-card-text" 
+                    viewBox="0 0 16 16" 
+                    onclick="openModal()">
+
+                        <title>Summarize Order</title>
+                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+                        <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8m0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"/>
+                    </svg>
+                </h2>
+                
+                <ul id="cart-items" class="list-group mb-3"></ul>
+                
+                <button class="btn btn-primary green" onclick="finishTransaction()">Finish Transaction</button>
+            </div>
+        </div>
+    </div>
+
+
+<div id="orderModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeModal()">&times;</span>
+      <h2 class="modal-title">Order Summary</h2>
+      <ul id="modalCartItems" class="modal-product-details"></ul>
+      <button class="btn btn-primary" onclick="confirmOrder()">Confirm Order</button>
+    </div>
+  </div>
+
+    <script>
+        let cart = [];
+
+        function addToCart(id, name, size, isVariation) {
+            if( size == null ) {
+                size = '';
+            }
+            cart.push({ id, name, size, isVariation});
+            console.log(name + " is Variation: " + isVariation);
+            updateCartDisplay();
+        }
+
+
+
+
+        function removeFromCart(itemId) {
+            // Find the index of the first occurrence of the item with matching itemId
+            const index = cart.findIndex(item => item.id === itemId);
+            
+            // If found, remove the item from the cart array at that index
+            if (index !== -1) {
+                cart.splice(index, 1);
+                updateCartDisplay();
+            }
+        }
+
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            
+
+            cart.sort((a, b) => {
+                if (a.name === b.name) {
+                    return a.size.localeCompare(b.size); // Sort by size if names are the same
+                }
+                return a.name.localeCompare(b.name); // Sort by name otherwise
+            });
+
+
+            let currentName = null;
+            let currentSize = null;
+
+            cart.forEach((item, index) => {
+                // Create list item element
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+                // Display item details
+                listItem.textContent = `${item.name} (${item.size})`; // Adjust based on your item structure
+
+                // Check if current item is different from previous item in terms of name or size
+                if (item.name !== currentName || item.size !== currentSize) {
+                    // Add a divider for items with different names or sizes, but not before the first item
+                    if (index !== 0) {
+                        const divider = document.createElement('hr');
+                        cartItems.appendChild(divider);
+                    }
+                    // Update currentName and currentSize to current item's values
+                    currentName = item.name;
+                    currentSize = item.size;
+                }
+
+                // Create delete button
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'btn btn-primary red';
+                deleteButton.textContent = 'Remove';
+                deleteButton.onclick = () => removeFromCart(item.id); // Call removeFromCart function
+
+                // Append delete button to list item
+                listItem.appendChild(deleteButton);
+
+                // Append list item to cart items list
+                cartItems.appendChild(listItem);
+            });
+        }
+
+        function finishTransaction() {
+            fetch('/finish-transaction', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cart })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Transaction completed!');
+                    cart = [];
+                    updateCartDisplay();
+                } else {
+                    alert('Transaction failed!: ' + data.error);
+                }
+            });
+        }
+
+        // Function to highlight text
+        function highlightText(element, query) {
+            const innerHTML = element.textContent;
+            const regex = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi'); // Create regex for case-insensitive search
+            element.innerHTML = innerHTML.replace(regex, match => `<span class='highlight'>${match}</span>`);
+        }
+
+                        // Handle input event for search box
+                const searchBox = document.getElementById('search-box');
+                searchBox.addEventListener('input', function() {
+                    const query = searchBox.value.toLowerCase().trim();
+                    const items = document.querySelectorAll('.item');
+                    items.forEach(item => {
+                        const name = item.querySelector('.item-details span').textContent.toLowerCase().trim();
+                        if (name.includes(query)) {
+                            item.style.display = 'block';
+                            highlightText(item.querySelector('.item-details span'), query);
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+
+
+// Function to update existing modal content with cart items
+function updateModalContent() {
+    const modalCartItems = document.getElementById('modalCartItems');
+    modalCartItems.innerHTML = '';
+
+    let cartItemDetails = {}; // Object to store item details with count
+
+    cart.forEach(item => {
+        // Generate a unique key for each item based on name and size
+        const key = item.name + (item.size ? ` (${item.size})` : '');
+
+        // If key does not exist in cartItemDetails, initialize count; otherwise, increment count
+        if (!cartItemDetails[key]) {
+            cartItemDetails[key] = {
+                count: 1,
+                size: item.size // Store size if available
+            };
+        } else {
+            cartItemDetails[key].count += 1;
+        }
+    });
+    // Iterate over cartItemDetails and create list items for each item
+    Object.entries(cartItemDetails).forEach(([itemKey, { count, size }]) => {
+        // Create list item element
+        const listItem = document.createElement('li');
+        listItem.textContent = `${itemKey} - Count: ${count}`; // Display item name with size and count
+
+        // Append list item to modal cart items list
+        modalCartItems.appendChild(listItem);
+    });
+}
+// Function to open the modal
+function openModal() {
+  const modal = document.getElementById('orderModal');
+  modal.style.display = 'block';
+  updateModalContent();
+}
+
+// Function to close the modal
+function closeModal() {
+  const modal = document.getElementById('orderModal');
+  modal.style.display = 'none';
+}
+
+// Function to confirm the order (placeholder function)
+function confirmOrder() {
+  finishTransaction();
+  console.log('Order confirmed!');
+  closeModal(); // Optionally close the modal after confirmation
+}
+
+    // Close modal when clicking outside of the modal content
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('orderModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+
+
+
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

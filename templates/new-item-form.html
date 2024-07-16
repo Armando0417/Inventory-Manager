@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Item Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/new_item_form.css') }}">
+</head>
+<body>
+<div class="form-body">
+    <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+
+                    <div class="align-right">
+                        <button class="btn btn-primary" onclick="window.location.href='/products'">Back to Inventory</button>
+                    </div>
+
+                    <h3>Add New Item</h3>
+                    <p>Fill in the details below to add a new item.</p>
+                    <form id="add-item-form" class="requires-validation" novalidate>
+
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" name="name" placeholder="Item Name">
+                            <div class="invalid-feedback">Item name cannot be blank!</div>
+                         </div>
+                        
+                         <div class="col-md-12">
+                            <input class="form-control" type="text" name="category" placeholder="Category" required>
+                            <div class="invalid-feedback">Category cannot be blank!</div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" name="price" placeholder="Price" step="0.01" required>
+                            <div class="invalid-feedback">Price cannot be blank!</div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" name="quantity" placeholder="Quantity" required>
+                            <div class="invalid-feedback">Quantity cannot be blank!</div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <textarea class="form-control" name="description" rows="3" placeholder="Description (Optional)"></textarea>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <input type="checkbox" id="variation" name="variation">
+                            <label for="variation">This item is a variation (only if item is a different size or color)</label>
+                        </div>
+
+                        <div class="form-button-container">
+                            <button class="btn btn-primary full-width-btn" type="submit">Add Item</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    document.getElementById('add-item-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+    
+        const formData = {
+            name: document.querySelector('[name="name"]').value,
+            category: document.querySelector('[name="category"]').value,
+            price: parseFloat(document.querySelector('[name="price"]').value),
+            quantity: parseInt(document.querySelector('[name="quantity"]').value),
+            description: document.querySelector('[name="description"]').value,
+            variation: document.querySelector('[name="variation"]').checked
+        };
+    
+        fetch('/add-product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert('Item added successfully');
+                window.location.href = '/products'; // Redirect to the inventory page
+            } else {
+                alert('Failed to add item: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error adding item:', error);
+        });
+    });
+    </script>

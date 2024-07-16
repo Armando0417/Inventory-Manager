@@ -1,0 +1,27 @@
+/*
+    This is the CSS for the typography of the text in the site.
+    Everything from headers to the footer is here.
+*/
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+p {
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.5;
+    font-size: 1.1rem;
+}
+
+span {
+    color: inherit;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}

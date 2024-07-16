@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;900&display=swap');
+
+/* Apply Poppins font to all elements and body */
+*, body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased; /* Smooth the font */
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Set full height for html and body and apply background color */
+html, body {
+    height: 100%;
+    background-color: #242424; /* Dark background color */
+    overflow: hidden; /* Prevent scrolling */
+    /* border-radius: 10px; */
+}
+
+/* Center the form vertically and horizontally */
+.form-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+/* Center the form content and add padding */
+.form-holder .form-content {
+    position: relative;
+    text-align: center;
+    display: flex; /* Use flexbox for centering */
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+}
+
+/* Style the form container */
+.form-content .form-items {
+    border: 3px solid #fff; /* White border */
+    padding: 40px;
+    display: inline-block;
+    width: 100%;
+    min-width: 540px; /* Minimum width for the form */
+    border-radius: 10px;
+    text-align: left;
+    transition: all 0.4s ease;
+    background-color: #05445E;
+}
+
+/* Style the form headings */
+.form-content h3 {
+    color: #fff; /* White text color */
+    text-align: left;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.form-content h3.form-title {
+    margin-bottom: 30px;
+}
+
+/* Style the form paragraph text */
+.form-content p {
+    color: #fff; /* White text color */
+    text-align: left;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 20px;
+    margin-bottom: 30px;
+    margin-right: 10px;
+}
+
+/* Style the form labels and validation messages */
+.form-content label, .was-validated .form-check-input:invalid~.form-check-label, .was-validated .form-check-input:valid~.form-check-label {
+    color: #fff; /* White text color */
+}
+
+/* Style the text input, password, email, and select elements */
+.form-content input[type=text], .form-content input[type=password], .form-content input[type=email], .form-content select {
+    width: 90%;
+    padding: 9px 20px;
+    text-align: left;
+    border: 0;
+    outline: 0;
+    border-radius: 6px;
+    background-color: #fff; /* White background color */
+    font-size: 15px;
+    font-weight: 300;
+    color: #2c2c2c; /* Gray text color */
+    transition: all 0.3s ease;
+    margin-top: 16px;
+}
+
+/* Style the primary button */
+.btn-primary {
+    background-color: #642b56; 
+    color: #fff; /* White text color */
+    width: 100px;
+    outline: none;
+    border: 0px;
+    box-shadow: none;
+    border-radius: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* Style the primary button on hover and focus */
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #4a2040; /* Darker background color */
+    outline: none !important;
+    border: none !important;
+    box-shadow: none;
+}
+
+/* Add margin to the form button container */
+.form-button-container {
+    margin-top: 20px;
+}
+
+/* Make the button take the full width */
+.full-width-btn {
+    width: 97.7%; /* Full width with slight padding */
+    padding: 15px;
+    font-size: 18px;
+}
+
+/* Style the textarea element */
+.form-content textarea {
+    position: static !important;
+    width: 90%;
+    padding: 8px 20px;
+    border-radius: 6px;
+    text-align: left;
+    background-color: #fff; /* White background color */
+    border: 0;
+    font-size: 15px;
+    font-weight: 300;
+    color: #8D8D8D; /* Gray text color */
+    outline: none;
+    resize: none;
+    height: 120px;
+    transition: none;
+    margin-top: 16px;
+    margin-bottom: 14px;
+}
+
+/* Change textarea background and text color on hover and focus */
+.form-content textarea:hover, .form-content textarea:focus {
+    border: 0;
+    background-color: #ebeff8; /* Light background color */
+    color: #cd1002; /* Red text color */
+}
+
+/* Add margin to move elements up or down */
+.mv-up {
+    margin-top: -9px !important;
+    margin-bottom: 8px !important;
+}
+
+/* Style for invalid feedback */
+.invalid-feedback {
+    color: #ff606e; /* Red color for invalid feedback */
+}
+
+/* Style for valid feedback */
+.valid-feedback {
+    color: #2acc80; /* Green color for valid feedback */
+}
+
+/* Align button to the right */
+.align-right {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}

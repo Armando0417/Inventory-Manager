@@ -1,0 +1,172 @@
+
+/* Category-specific backgrounds */
+.clothes-background {
+    background-color: #f77373;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.clothes-background:hover {
+    background-color: #ff4e4e;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 5;
+}
+
+.notebooks-background {
+    background-color: rgb(99, 99, 255);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.notebooks-background:hover {
+    background-color: rgb(74, 74, 193);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.cups-background {
+    background-color: #c8af60;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cups-background:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.mugs-background {
+    background-color: purple;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mugs-background:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.stickers-background {
+    background-color: rgb(255, 199, 94);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stickers-background:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.stationery-background {
+    background-color: #e575f3;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stationery-background:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.default-background {
+    background-color: transparent;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.default-background:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* The actual categories */
+.male-clothes-border {
+    border: 2px solid #ff4e4e;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.male-clothes-border:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.female-clothes-border {
+    border: 2px solid #ff4e4e;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.female-clothes-border:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.shoes-border {
+    border: 2px solid rgb(255, 145, 19);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shoes-border:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.instruments-border {
+    border: 2px solid #54dbbc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.instruments-border:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.accessories-border {
+    border: 2px solid rgb(180, 200, 108);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.accessories-border:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.gifts-border {
+    border: 2px solid #d4af37;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gifts-border:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.default-border {
+    border: 2px solid #fff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.default-border:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}

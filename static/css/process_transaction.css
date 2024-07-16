@@ -1,0 +1,108 @@
+
+
+/* Cart and inventory container styles */
+
+/* Custom styles for better inventory item display */
+@import url('restructured/typography.css');
+
+.item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 15px;
+}
+
+.item-details {
+    margin-bottom: 5px;
+    color: white; /* Ensure it inherits the color */
+}
+
+.item-variation {
+    font-style: italic;
+}
+
+.item-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#cart {
+    height: 600px; /* Adjust height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
+
+.bi.bi-card-text {
+    position: relative; /* Ensure the SVG icon's position is relative for absolute positioning */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.bi.bi-card-text:hover::after {
+    content: "Summarize Order"; /* Text content to display */
+    position: absolute; /* Position relative to the SVG icon */
+    top: 100%; /* Position below the icon */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
+    background-color: rgba(0, 0, 0, 0.8); /* Background color */
+    color: white; /* Text color */
+    padding: 4px 8px; /* Padding */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 12px; /* Font size */
+    white-space: nowrap; /* Prevent wrapping */
+    z-index: 1; /* Ensure tooltip is above other content */
+}
+
+
+
+.inventory-container,
+.cart-container {
+    width: 45%;
+}
+
+#inventory-list,
+#cart-list {
+    border: 1px solid #ddd;
+    padding: 10px;
+    height: 600px;
+    overflow-y: scroll;
+    border-radius: 5px;
+}
+
+#inventory-list div,
+#cart-list li {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Adding padding to cart items */
+#cart-items .list-group-item {
+    padding: 10px;
+    background-color: #05445E;
+    color: white;
+}
+
+
+#process-cart-button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+#process-cart-button:hover {
+    background-color: darkgreen;
+}

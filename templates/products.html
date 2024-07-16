@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="sidebar">
+    <div class="logo-details">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo-image" alt="Logo">
+        <div class="logo_name">Inventory</div>
+        <i class='bx bx-menu' id="btn"></i>
+    </div>
+
+    <ul class="nav-list">
+        <li>
+            <a href="#" class="filter-btn" data-filter="all">
+                <i class='bx bx-grid-alt'></i>
+                <span class="links_name">All</span>
+                <span class="tooltip">All</span>
+            </a>
+        </li>
+        {% for category in categories %}
+        <li>
+            <a href="#" class="filter-btn" data-filter="{{ category[0] }}">
+                <i class="bx bx-category"></i>
+                <span class="links_name">{{ category[0] }}</span>
+                <span class="tooltip">{{ category[0] }}</span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<section class="home-section">
+    <div class="search-and-buttons">
+
+        <!-- --- Search Box is HERE! ---> 
+        <form id="search-form" onsubmit="return false;">
+            <input type="text" id="search-box" placeholder="Search products...">
+        </form>
+        
+        <div class ="button-container">
+            <button class="btn btn-primary btn-sm float-end" onclick="window.location.href='/modify-inventory'">
+                Add Items <!--- This is the text that is displayed en el button -->
+            </button>
+        </div>
+        <div class ="button-container">
+            <button class="btn btn-primary btn-sm float-end" onclick="window.location.href='/process-transaction'">
+                Make Transaction <!--- This is the text that is displayed en el button -->
+            </button>
+        </div>
+        <ul id="MakeTransaction" class="list-group mb-3"></ul>
+        <ul id="AddProduct" class="list-group mb-3"></ul>
+
+    </div>
+    <div class="header">
+        <div class="text">
+            Current Inventory <!--- This is the text that is displayed en el header -->
+        </div>
+    </div>
+    <div class="grid-container" id="product-grid">
+        {% for product in products %}
+        <div class="grid-item"
+             data-category="{{ product.category }}"
+             data-id="{{ product.id }}"
+             data-name="{{ product.name }}"
+             data-price="{{ product.price }}"
+             data-quantity="{{ product.total_quantity() }}"
+             data-description="{{ product.description }}">
+
+            <h3>{{ product.name }}</h3>
+            <p>Price: ${{ product.price }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="home-section">
+    <div class="header">
+        <div class="text">Out of Stock</div>
+    </div>
+    <div class="grid-container" id="product-grid">
+        {% for product in products %}
+        {% if product.total_quantity() == 0 %}
+        <div class="grid-item"
+             data-category="{{ product.category }}"
+             data-id="{{ product.id }}"
+             data-name="{{ product.name }}"
+             data-price="{{ product.price }}"
+             data-quantity="{{ product.total_quantity() }}"
+             data-description="{{ product.description }}">
+
+            <h3>{{ product.name }}</h3>
+            <p>Price: ${{ product.price }}</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Modal Structure -->
+<div id="product-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2 id="modal-product-name"></h2>
+        <p id="modal-product-quantity"></p>
+        <p id="modal-product-category"></p>
+        <p id="modal-product-price"></p>
+        <p id="modal-product-description"></p>
+        <ul id="modal-product-variations"></ul>
+    </div>
+</div>
+{% endblock %}
